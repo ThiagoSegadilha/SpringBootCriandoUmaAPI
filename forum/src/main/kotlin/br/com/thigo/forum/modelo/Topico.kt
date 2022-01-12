@@ -1,15 +1,21 @@
 package br.com.thigo.forum.modelo
 
 import java.time.LocalDateTime
+import javax.persistence.*
 
-
+@Entity
 class Topico(var titulo: String, var mensagem: String, curso: Curso) {
 
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
     var dataCriacao = LocalDateTime.now()
+    @Enumerated(EnumType.STRING)
     var status = StatusTopico.NAO_RESPONDIDO
+    @ManyToOne
     var autor: Usuario? = null
+    @ManyToOne
     private var curso: Curso
+    @OneToMany(mappedBy = "topico") // Só pra na hora da compilação ele não achar quer é um novo mapeamento
     var respostas: List<Resposta> = ArrayList()
 
     override fun hashCode(): Int {

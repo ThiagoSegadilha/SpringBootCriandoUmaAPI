@@ -1,6 +1,14 @@
 package br.com.thigo.forum.modelo
 
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+
+@Entity
 class Usuario {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) //Para auto incremento da chave primaria
     var id: Long? = null
     var nome: String? = null
     var email: String? = null
