@@ -12,8 +12,8 @@ class TopicoDto(topico: Topico) {
 
     init {
         id = topico.id
-        titulo = topico.titulo
-        mensagem = topico.mensagem
+        titulo = topico.titulo.toString()
+        mensagem = topico.mensagem.toString()
         dataCriacao = topico.dataCriacao
     }
 

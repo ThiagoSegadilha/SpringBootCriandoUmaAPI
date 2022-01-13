@@ -4,17 +4,19 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-class Topico(var titulo: String, var mensagem: String, curso: Curso) {
+class Topico() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
+    var titulo: String? = null
+    var mensagem: String? = null
     var dataCriacao = LocalDateTime.now()
     @Enumerated(EnumType.STRING)
     var status = StatusTopico.NAO_RESPONDIDO
     @ManyToOne
     var autor: Usuario? = null
     @ManyToOne
-    private var curso: Curso
+    private var curso: Curso? = null
     @OneToMany(mappedBy = "topico") // Só pra na hora da compilação ele não achar quer é um novo mapeamento
     var respostas: List<Resposta> = ArrayList()
 
@@ -43,7 +45,7 @@ class Topico(var titulo: String, var mensagem: String, curso: Curso) {
         return true
     }
 
-    fun getCurso(): Curso {
+    fun getCurso(): Curso? {
         return curso
     }
 

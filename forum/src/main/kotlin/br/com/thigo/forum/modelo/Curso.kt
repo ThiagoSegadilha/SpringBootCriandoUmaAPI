@@ -6,10 +6,12 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 
 @Entity
-class Curso(var nome: String, var categoria: String) {
+class Curso() {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
+    var nome: String? = null
+    var categoria: String? = null
 
     override fun hashCode(): Int {
         val prime = 31

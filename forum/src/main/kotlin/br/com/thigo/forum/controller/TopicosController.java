@@ -13,11 +13,11 @@ import java.util.List;
 @RestController
 public class TopicosController {
 
-    @RequestMapping("/topicoss")
-    public List<TopicoDto> lista() {
-        Topico topico = new Topico("Dúvida Hard", "Dúvida com Spring", new Curso("Spring", "Programação"));
-
-        return TopicoDta.converter(Arrays.asList(topico, topico, topico));
-    }
+//    @RequestMapping("/topicoss")
+//    public List<TopicoDto> lista() {
+//        Topico topico = new Topico("Dúvida Hard", "Dúvida com Spring", new Curso("Spring", "Programação"));
+//
+//        return TopicoDta.converter(Arrays.asList(topico, topico, topico));
+//    }
 
 }
