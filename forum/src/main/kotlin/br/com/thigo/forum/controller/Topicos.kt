@@ -15,10 +15,16 @@ class Topicos {
     private var topicoRepository: TopicoRepository? = null
 
     @RequestMapping("/topicos")
-    fun lista(): List<TopicoDto> {
-        val topicos = topicoRepository!!.findAll().toList()
+    fun lista(nomeCurso: String?): List<TopicoDto> {
+        if (nomeCurso === null) {
+            val topicos = topicoRepository!!.findAll()
 
-        return TopicoDto.converter(topicos as List<Topico>)
+            return TopicoDto.converter(topicos as List<Topico>)
+        } else {
+            val topicos = topicoRepository!!.findByCurso_Nome(nomeCurso) // findByCurso_Nome: O "_" indica um relacionamento
+
+            return TopicoDto.converter(topicos)
+        }
     }
 }
 
