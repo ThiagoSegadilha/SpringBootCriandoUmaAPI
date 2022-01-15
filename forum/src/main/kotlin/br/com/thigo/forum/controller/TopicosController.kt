@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity
 //import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
+import javax.validation.Valid
+
 //import javax.validation.Valid
 
 
@@ -35,7 +37,7 @@ class TopicosController {
     }
 
     @PostMapping
-    fun cadastrar(@RequestBody topicoForm: TopicoForm, uriBuilder: UriComponentsBuilder): ResponseEntity<TopicoDto> {  // @RequestBody: Indicar ao Spring que os parâmetros enviados no corpo da requisição devem ser atribuídos ao parâmetro do método
+    fun cadastrar(@RequestBody @Valid topicoForm: TopicoForm, uriBuilder: UriComponentsBuilder): ResponseEntity<TopicoDto> {  // @RequestBody: Indicar ao Spring que os parâmetros enviados no corpo da requisição devem ser atribuídos ao parâmetro do método
         val topico = topicoForm.converter(cursoRepository!!)
         topicoRepository!!.save(topico)
 
