@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
+import java.util.*
 import javax.validation.Valid
 
 
@@ -42,14 +43,19 @@ class TopicosController {
     }
 
     @GetMapping("/{id}")
-    fun detalhar(@PathVariable id: Long): DetalhesDoTopicoDto {
-        val topico = topicoRepository!!.getById(id)
+    fun detalhar(@PathVariable id: Long): ResponseEntity<DetalhesDoTopicoDto> {
+        val topico: Optional<Topico> = topicoRepository!!.findById(id)
 
-        println(topico)
-        return DetalhesDoTopicoDto(topico)
+        return if (topico.isPresent) {
+            ResponseEntity.ok(DetalhesDoTopicoDto(topico.get()))
+        } else {
+            ResponseEntity.notFound().build<DetalhesDoTopicoDto>()
+        }
+
     }
 
     @PostMapping
+    @Transactional
     fun cadastrar(
         @RequestBody @Valid topicoForm: TopicoForm,
         uriBuilder: UriComponentsBuilder
@@ -67,15 +73,31 @@ class TopicosController {
         @PathVariable id: Long,
         @RequestBody @Valid atualizacaoTopicoForm: AtualizacaoTopicoForm
     ): ResponseEntity<TopicoDto> {
-        val topico: Topico = atualizacaoTopicoForm.atualizar(id, topicoRepository)
+        val optional: Optional<Topico> = topicoRepository!!.findById(id)
 
-        return ResponseEntity.ok(TopicoDto(topico))
+        return if (optional.isPresent) {
+            val topico: Topico = atualizacaoTopicoForm.atualizar(id, topicoRepository)
+
+            ResponseEntity.ok(TopicoDto(topico))
+        } else {
+            ResponseEntity.notFound().build<TopicoDto>()
+
+        }
+
     }
 
     @DeleteMapping("/{id}")
+    @Transactional
     fun remover(@PathVariable id: Long): ResponseEntity<*> {
-        topicoRepository!!.deleteById(id)
-        return ResponseEntity.ok().build<Any>()
+        val optional: Optional<Topico> = topicoRepository!!.findById(id)
+
+        return if (optional.isPresent) {
+            topicoRepository!!.deleteById(id)
+            ResponseEntity.ok().build<Any>()
+        } else {
+            ResponseEntity.notFound().build<Any>()
+        }
+
     }
 }
 
