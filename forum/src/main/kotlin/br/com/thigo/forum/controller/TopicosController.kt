@@ -71,5 +71,11 @@ class TopicosController {
 
         return ResponseEntity.ok(TopicoDto(topico))
     }
+
+    @DeleteMapping("/{id}")
+    fun remover(@PathVariable id: Long): ResponseEntity<*> {
+        topicoRepository!!.deleteById(id)
+        return ResponseEntity.ok().build<Any>()
+    }
 }
 
